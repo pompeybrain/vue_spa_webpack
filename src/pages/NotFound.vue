@@ -19,3 +19,22 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style>
+.not-found {
+  padding-top: 200px;
+  text-align: center;
+}
+
+.bg-btn {
+  height: 30px;
+  width: 80px;
+  background-color: #409eff;
+  color: #ffffff;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+</style>

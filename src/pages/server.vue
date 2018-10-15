@@ -79,7 +79,7 @@
           <el-form-item label-width="110px" label=" ">
             <el-input v-model="conditionForm.item.server_code" style="width: 200px;" size="small" :placeholder="$t('serverManage.searchServerName')"></el-input>
           </el-form-item>
-          <el-form-item label-width="110px" label=" " >
+          <el-form-item label-width="110px" label=" ">
             <el-button @click="getItems" type="primary">{{$t('common.search')}}</el-button>
             <el-button @click="resetCondition">{{$t('common.all')}}</el-button>
           </el-form-item>
@@ -162,16 +162,16 @@
           <el-table-column prop="ip" label="外网地址" width="120" sortable align="center">
           </el-table-column>
           <!--<el-table-column prop="report_time" :label="$t('common.updateTime')" width="140" sortable align="center">-->
-            <!--<template slot-scope="scope">-->
-              <!--{{formatTime({timestamp: scope.row.report_time})}}-->
-            <!--</template>-->
+          <!--<template slot-scope="scope">-->
+          <!--{{formatTime({timestamp: scope.row.report_time})}}-->
+          <!--</template>-->
           <!--</el-table-column>-->
           <el-table-column prop="server_version" width="120" :label="$t('serverManage.serverVersion')" sortable align="center">
           </el-table-column>
           <el-table-column prop="down_result" sortable width="130" :label="$t('serverManage.romDownResult')" align="center">
             <template slot-scope="scope">
               <div v-if="(scope.row.down_result).indexOf('失')!==-1 || (scope.row.down_result).indexOf('fail')!==-1" style="color:red;">{{scope.row.down_result}}</div>
-              <div  v-else>{{scope.row.down_result}}</div>
+              <div v-else>{{scope.row.down_result}}</div>
             </template>
           </el-table-column>
           <el-table-column prop="update_result" width="130" :label="$t('serverManage.upgradeResult')" sortable align="center">
@@ -311,7 +311,7 @@ export default {
       roms: [],
       serverVersions: [],
       romStores: [],
-      allGroups:[],
+      allGroups: [],
       currentDownOptions: [],
       rom: '',
       selectedRom: '',
@@ -327,7 +327,7 @@ export default {
       selectedItems: [],
       conditionForm: {
         item: {
-          server_group_id:'',
+          server_group_id: '',
           server_code: '',
           server_mac: '',
           ip: '',
@@ -505,6 +505,8 @@ export default {
     },
     /* table 必备 */
     getItems () {
+      console.log('1')
+      conssole.log('2')
       clearTimeout(this.itemsTimer)
       this.$http
         .postJSON('api/serverInfo/list', this.conditionForm)
@@ -519,11 +521,11 @@ export default {
                 // 2.3.1.zip 、 2.3.10.zip 类似字段排序
                 let aArr = a.split('.')
                 let bArr = b.split('.')
-                let maxL = aArr.length>bArr.length?aArr.length:bArr.length
+                let maxL = aArr.length > bArr.length ? aArr.length : bArr.length
                 for (let i = 0; i < maxL; i++) {
-                  let aSub = isNaN(aArr[i] - 0)?0:aArr[i] - 0
-                  let bSub = isNaN(bArr[i] - 0)?0:bArr[i] - 0
-                  if(aSub !== bSub) {
+                  let aSub = isNaN(aArr[i] - 0) ? 0 : aArr[i] - 0
+                  let bSub = isNaN(bArr[i] - 0) ? 0 : bArr[i] - 0
+                  if (aSub !== bSub) {
                     return bSub - aSub
                   }
                 }
@@ -542,7 +544,7 @@ export default {
     resetCondition () {
       this.conditionForm = {
         item: {
-          server_group_id:'',
+          server_group_id: '',
           server_code: '',
           server_mac: '',
           ip: '',
@@ -610,7 +612,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="postcss">
+<style scoped>
 .small-select {
   width: 200px;
 }

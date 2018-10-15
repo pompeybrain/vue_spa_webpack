@@ -5,13 +5,13 @@ import enLocale from 'element-ui/lib/locale/lang/en';
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN';
 import VueI18n from 'vue-i18n';
 import App from './App.vue';
-import FetchUtil from './assets/scripts/fetchUtil';
+import fetchUtil from './assets/scripts/fetchUtil';
 import router from './router';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import Vue from 'vue';
 import '../static/iconfont';
-import './assets/global.css';
+import './assets/css/global.css';
 import cn from './assets/lang/cn';
 import en from './assets/lang/en';
 
@@ -32,7 +32,8 @@ Vue.use(ElementUI, {
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$http = new FetchUtil(i18n, router);
+Vue.prototype.$http = fetchUtil;
+fetchUtil.setup(i18n, router);
 
 /* ApiHost settings */
 
@@ -41,7 +42,7 @@ const DEVSERVER1 = 'http://192.168.1.26:88/raid-monitor/';
 const PRODSERVER = '/raid-monitor/';
 
 if (process.env.NODE_ENV === 'development') {
-  window.APIHOST = DEVSERVER1;
+  window.APIHOST = DEVSERVER;
 } else if (process.env.NODE_ENV === 'production') {
   window.APIHOST = PRODSERVER;
 }

@@ -4,7 +4,7 @@ import commonConfig from './webpack.common';
 
 module.exports = merge(commonConfig, {
   mode: 'development',
-  devtool: '#@cheap-module-source-map',
+  devtool: 'cheap-module-eval-source-map',
   devServer: {
     contentBase: './dist',
     open: true,

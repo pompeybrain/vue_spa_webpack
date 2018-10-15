@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+[hidden] {
+  display: none;
+}
+
+html {
+  height: 100%;
+  overflow: auto;
+}
+
+body {
+  height: calc(100% - 50px);
+  background-color: #edf1f7;
+}
+
+.long-btn {
+  width: 130px;
+}
+
+.el-table tr {
+  color: #666666;
+}
+
+.el-table__empty-block {
+  background-color: #f6f6f6;
+}
+
+.container {
+  margin: 50px 0 0 200px;
+  padding: 10px;
+}
+
+.row {
+  margin: 10px 0;
+  overflow: auto;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.f-right {
+  float: right;
+}
+
+.f-left {
+  float: left;
+}
+
+.lg-btn {
+  width: 100%;
+}
+
+/* 修改element 的一些默认样式*/
+.el-breadcrumb {
+  margin: 10px 0;
+}
+
+.el-breadcrumb__item:last-child .el-breadcrumb__inner,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner a,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
+  /*color: #e4e4e4;*/
+}
+
+.el-select {
+  width: 100%;
+}
+
+.el-dialog__body {
+  padding: 20px;
+}
+
+.el-input-group__prepend {
+  padding: 0 8px;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+  background-color: rgb(230, 240, 250);
+}
+
+.el-table th {
+  background-color: #dadfe6;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+/* icon 大小 */
+.icon-4x {
+  font-size: 40px !important;
+}
+
+/*自定义弹窗大小*/
+.update-form-dialog {
+  width: 500px;
+}

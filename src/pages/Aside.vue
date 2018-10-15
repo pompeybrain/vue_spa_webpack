@@ -65,3 +65,19 @@ export default {
   }
 }
 </script>
+<style scoped>
+.el-menu {
+  height: 100%;
+  background-color: transparent;
+}
+
+.el-menu-item {
+  color: #000000;
+}
+.el-menu-item .icon {
+  margin-right: 5px;
+  width: 24px;
+  text-align: center;
+  font-size: 14px;
+}
+</style>

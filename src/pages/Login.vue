@@ -120,3 +120,41 @@ export default {
   }
 }
 </script>
+<style scoped>
+.login-box {
+  text-align: center;
+  width: 400px;
+  height: 340px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.login-box h3 {
+  margin-bottom: 30px;
+}
+
+.el-row i {
+  margin-top: 3px;
+}
+
+.lg-btn {
+  width: 100%;
+}
+
+.version {
+  color: #878d99;
+}
+
+.icon {
+  font-size: 24px;
+  fill: #409eff;
+}
+
+.remember-me {
+  margin-bottom: 5px;
+}
+</style>

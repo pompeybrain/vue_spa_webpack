@@ -99,7 +99,7 @@
         <el-table-column prop="detail" :label="$t('common.detail')" min-width="160" align="center">
           <template slot-scope="scope">
             <ul style="list-style: none;">
-              <li class="device" v-for="detail in scope.row.detail.split(';').slice(0,-1)">{{detail}}</li>
+              <li class="device" v-for="detail in scope.row.detail.split(';').slice(0,-1)" :key="detail">{{detail}}</li>
             </ul>
           </template>
         </el-table-column>

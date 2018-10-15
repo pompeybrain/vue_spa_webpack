@@ -1,7 +1,7 @@
-import merge from 'webpack-merge';
-import commonConfig from './webpack.common.js';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
+import merge from 'webpack-merge';
+import commonConfig from './webpack.common.js';
 
 module.exports = merge(commonConfig, {
   mode: 'production',
@@ -16,6 +16,6 @@ module.exports = merge(commonConfig, {
       },
       canPrint: true
     }),
-    new UglifyJSPlugin(),
+    new UglifyJSPlugin()
   ]
-})
+});

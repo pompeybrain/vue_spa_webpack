@@ -124,3 +124,50 @@ export default {
   }
 };
 </script>
+<style scoped>
+.header {
+  background-color: #267194;
+  position: fixed;
+  top: 0;
+  height: 50px;
+  width: 100%;
+  z-index: 200;
+  color: #ffffff;
+  align-items: center;
+}
+
+.aside {
+  display: block;
+  width: 200px;
+  overflow: auto;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+}
+
+.logo {
+  float: left;
+  color: #dddddd;
+  font-size: 24px;
+  line-height: 50px;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+.info,
+.oper {
+  float: right;
+  line-height: 50px;
+  margin-right: 50px;
+}
+
+.oper {
+  cursor: pointer;
+  display: flex;
+}
+
+.logout {
+  margin-left: 20px;
+}
+</style>

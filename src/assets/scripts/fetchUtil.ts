@@ -4,17 +4,26 @@ declare global {
     APIHOST: string;
   }
 }
+import vueI18n from 'vue-i18n';
+import vueRouter from 'vue-router';
+let innerI18n: vueI18n;
+let innerRouter: vueRouter;
 
-import { MessageBox } from "element-ui";
-function checkTimeout(i18n: any, router: any, data: any): void {
-  if (data.result === "0xff") {
+import { MessageBox } from 'element-ui';
+function checkTimeout(data: any): void {
+  if (!innerI18n || !innerRouter) {
+    // tslint:disable-next-line:no-console
+    console.warn('no setup for fetchUtil');
+    return;
+  }
+  if (data.result === '0xff') {
     if (!window.timeoutFlag) {
       window.timeoutFlag = true;
-      MessageBox.alert(i18n.t("header.timeoutMessage"), {
-        type: "warning",
+      MessageBox.alert(String(innerI18n.t('header.timeoutMessage')), {
+        type: 'warning',
         callback: () => {
           window.timeoutFlag = false;
-          router.push("/");
+          innerRouter.push('/');
         }
       });
     }
@@ -22,13 +31,13 @@ function checkTimeout(i18n: any, router: any, data: any): void {
 }
 
 function correctUrl(url: string) {
-  return url.startsWith("http") || url.startsWith("/")
+  return url.startsWith('http') || url.startsWith('/')
     ? url
     : window.APIHOST + url;
 }
 
 function formEncode(data: any) {
-  let body = "";
+  let body = '';
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
       body += `${key}=${data[key]}&`;
@@ -36,67 +45,85 @@ function formEncode(data: any) {
   }
   return body.slice(0, -1);
 }
-export default class FetchUtil {
-  public get: (url: any) => Promise<any>;
-  public postJSON: (url: any, data: any) => Promise<any>;
-  public postForm: (url: any, data: any) => Promise<any>;
-  constructor(i18n: any, router: any) {
-    this.get = url => {
-      const correctedUrl = correctUrl(url);
-      return fetch(correctedUrl, { credentials: "include" })
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw new Error("get error: " + url);
-          }
-        })
-        .then(data => {
-          checkTimeout(i18n, router, data);
-          return data;
-        });
-    };
-    this.postJSON = (url, data) => {
-      const correctedUrl = correctUrl(url);
-      return fetch(correctedUrl, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json;charset=utf-8" },
-        credentials: "include"
-      })
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw new Error("post error: " + correctedUrl);
-          }
-        })
-        .then(resData => {
-          checkTimeout(i18n, router, resData);
-          return data;
-        });
-    };
-    this.postForm = (url, data) => {
-      const correctedUrl = correctUrl(url);
-      return fetch(correctedUrl, {
-        method: "POST",
-        body: formEncode(data),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-        },
-        credentials: "include"
-      })
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw new Error("post error: " + correctedUrl);
-          }
-        })
-        .then(resData => {
-          checkTimeout(i18n, router, resData);
-          return data;
-        });
-    };
+
+function setup(i18n: vueI18n, router: vueRouter) {
+  innerI18n = i18n;
+  innerRouter = router;
+}
+
+function get(url: string) {
+  const correctedUrl = correctUrl(url);
+  return fetch(correctedUrl, { credentials: 'include' })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error('get error: ' + url);
+      }
+    })
+    .then(resData => {
+      checkTimeout(resData);
+      return resData;
+    });
+}
+function postForm(url: string, data: object) {
+  const correctedUrl = correctUrl(url);
+  return fetch(correctedUrl, {
+    method: 'POST',
+    body: formEncode(data),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    },
+    credentials: 'include'
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error('post error: ' + correctedUrl);
+      }
+    })
+    .then(resData => {
+      checkTimeout(resData);
+      return resData;
+    });
+}
+function postJSON(url: string, data: object) {
+  const correctedUrl = correctUrl(url);
+  return fetch(correctedUrl, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json;charset=utf-8' },
+    credentials: 'include'
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error('post error: ' + correctedUrl);
+      }
+    })
+    .then(resData => {
+      checkTimeout(resData);
+      return resData;
+    });
+}
+
+async function postJSONAwait(url: string, data: object) {
+  const correctedUrl = correctUrl(url);
+  const res = await fetch(correctedUrl, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json;charset=utf-8' },
+    credentials: 'include'
+  });
+  if (res.ok) {
+    const resData = res.json();
+    checkTimeout(resData);
+    return resData;
+  } else {
+    throw new Error('post error: ' + correctedUrl);
   }
 }
+
+export default { setup, get, postForm, postJSON, postJSONAwait };
