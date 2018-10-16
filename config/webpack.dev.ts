@@ -13,5 +13,20 @@ module.exports = merge(commonConfig, {
     port: 3700,
     stats: 'errors-only'
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 1 }
+          },
+          'postcss-loader'
+        ]
+      }
+    ]
+  },
   plugins: [new webpack.HotModuleReplacementPlugin({})]
 });

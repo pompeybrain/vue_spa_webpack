@@ -13,12 +13,12 @@ vue 的 单页面 的 webpack 配置
 
 - [x] vue 单文件组件
 - [x] 最新依赖，包括 vue、webpack 等
-- [ ] 开发模式：热更新
+- [x] 开发模式：热更新
 - [ ] css 生产样式 抽出
 - [x] postcss stylus 等支持
 - [x] font png file-loaders
 - [ ] svg 支持 symbol 使用 icon
-- [ ] 生产模式优化：公共 chunk 等
+- [x] 生产模式优化：代码分割、公共 chunk 等
 - [ ] 构建速度优化：dll
 - [ ] 完全使用 typescript
 - [ ] 单元测试：mocha + chai

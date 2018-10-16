@@ -27,23 +27,13 @@ const config: webpack.Configuration = {
         loader: 'ts-loader',
         exclude: /node_modules/,
         options: {
+          happyPackMode: true,
           appendTsSuffixTo: [/\.vue$/]
         }
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader'
-      },
-      {
-        test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          {
-            loader: 'css-loader',
-            options: { importLoaders: 1 }
-          },
-          'postcss-loader'
-        ]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,

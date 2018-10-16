@@ -20,12 +20,18 @@ export default new Router({
           path: '/server',
           component: () =>
             import(/* webpackChunkName: "server" */ './pages/server.vue')
+        },
+        {
+          path: '/log',
+          component: () =>
+            import(/* webpackChunkName: "log" */ './pages/log.vue')
         }
       ]
     },
     {
       path: '*',
-      component: resolve => import('./pages/NotFound.vue')
+      component: () =>
+        import(/* webpackChunkName: "notfound" */ './pages/NotFound.vue')
     }
   ]
 });

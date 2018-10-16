@@ -59,9 +59,10 @@
     </div>
   </div>
 </template>
-<script>
-import {formatTime} from '../../assets/utils'
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import { formatTime } from '../assets/scripts/utils'
+export default Vue.extend({
   data() {
     return {
       formatTime,
@@ -76,7 +77,7 @@ export default {
       saving: false,
       itemFormRules: {
         version: [
-          {required: true, message: this.$t('romManage.pleaseInputVersion')}
+          { required: true, message: this.$t('romManage.pleaseInputVersion') }
         ],
         url: [
           {
@@ -85,7 +86,7 @@ export default {
           }
         ],
         note: [
-          {required: true, message: this.$t('romManage.pleaseInputVersionNote')}
+          { required: true, message: this.$t('romManage.pleaseInputVersionNote') }
         ]
       },
       /* table */
@@ -130,12 +131,12 @@ export default {
       this.$confirm(
         this.$t('romManage.confirmOneKey'),
         this.$t('common.confirm'),
-        {type: 'warning'}
+        { type: 'warning' }
       )
         .then(() => {
           this.allDownload(rom)
         })
-        .catch(() => {})
+        .catch(() => { })
     },
     allDownload(rom) {
       this.$http
@@ -155,7 +156,7 @@ export default {
     addItem() {
       this.itemFormVisible = true
     },
-    editItem(item) {
+    editItem(item: object) {
       this.itemForm.id = item.id
       this.itemForm.version = item.version
       this.itemForm.url = item.url
@@ -163,7 +164,7 @@ export default {
       this.itemFormVisible = true
     },
     saveItem() {
-      this.$refs['itemForm'].validate(valid => {
+      this.$refs['itemForm'].validate((valid: boolean) => {
         if (valid) {
           this.saving = true
           let url = 'api/romStore/add'
@@ -207,7 +208,7 @@ export default {
         .then(() => {
           this.deleteItem(ids)
         })
-        .catch(() => {})
+        .catch(() => { })
     },
     deleteItem(ids) {
       this.$http.get('api/romStore/delete?ids=' + ids).then(res => {
@@ -227,7 +228,7 @@ export default {
         }
       })
     },
-    sortItems({prop, order}) {
+    sortItems({ prop, order }) {
       if (prop) {
         this.conditionForm.page.sortname = prop
         if (order === 'descending') {
@@ -254,7 +255,7 @@ export default {
       this.conditionForm.page.pageNo = no
       this.getItems()
     },
-    resetForm: function() {
+    resetForm: function () {
       this.$refs['itemForm'].resetFields()
       this.itemForm = {
         id: -1,
@@ -264,8 +265,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 <style scoped>
-
 </style>

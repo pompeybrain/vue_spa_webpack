@@ -4,6 +4,22 @@ declare global {
     APIHOST: string;
   }
 }
+import Vue from 'vue';
+
+interface FetchUtil {
+  setup(i18n: vueI18n, router: vueRouter): void;
+  get(url: string): Promise<Res>;
+  postForm(url: string, data: object): Promise<Res>;
+  postJSON(url: string, data: object): Promise<Res>;
+  postJSONAwait(): void;
+}
+
+declare module 'vue/types/vue' {
+  // 3. 声明为 Vue 补充的东西
+  interface Vue {
+    $http: FetchUtil;
+  }
+}
 import vueI18n from 'vue-i18n';
 import vueRouter from 'vue-router';
 let innerI18n: vueI18n;

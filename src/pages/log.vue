@@ -37,20 +37,22 @@
     </div>
   </div>
 </template>
-<script>
-import {formatTime} from '../../assets/utils'
-export default {
+<script lang="ts">
+import { formatTime } from '../assets/scripts/utils'
+
+import Vue from 'vue'
+export default Vue.extend({
   data() {
     return {
       formatTime,
       /* table */
-      currentItems: [],
-      selectedItems: [],
+      currentItems: [] as any[],
+      selectedItems: [] as any[],
       conditionForm: {
         item: {
           timeRange: '',
           startTime: '',
-          endTIme: '',
+          endTime: '',
           note: ''
         },
         page: {
@@ -74,10 +76,10 @@ export default {
   methods: {
     getItems() {
       if (this.conditionForm.item.timeRange.length === 2) {
-        this.conditionForm.item.startTime =
-          this.conditionForm.item.timeRange[0].valueOf() / 1000
-        this.conditionForm.item.endTime =
-          this.conditionForm.item.timeRange[1].valueOf() / 1000 + 24 * 3600
+        this.conditionForm.item.startTime = '' +
+          (parseInt(this.conditionForm.item.timeRange[0].valueOf()) / 1000)
+        this.conditionForm.item.endTime = '' +
+          (parseInt(this.conditionForm.item.timeRange[1].valueOf()) / 1000 + 24 * 3600)
       } else {
         this.conditionForm.item.startTime = ''
         this.conditionForm.item.endTime = ''
@@ -91,7 +93,7 @@ export default {
         }
       })
     },
-    sortItems({prop, order}) {
+    sortItems({ prop, order }: any) {
       if (prop) {
         this.conditionForm.page.sortname = prop
         if (order === 'descending') {
@@ -105,16 +107,16 @@ export default {
       }
       this.getItems()
     },
-    selectionChange(selections) {
+    selectionChange(selections: any[]) {
       this.selectedItems = selections.map(item => {
         return item
       })
     },
-    pageSizeChange(size) {
+    pageSizeChange(size: number) {
       this.conditionForm.page.pageSize = size
       this.getItems()
     },
-    pageNoChange(no) {
+    pageNoChange(no: number) {
       this.conditionForm.page.pageNo = no
       this.getItems()
     },
@@ -123,7 +125,7 @@ export default {
         item: {
           timeRange: '',
           startTime: '',
-          endTIme: '',
+          endTime: '',
           note: ''
         },
         page: {
@@ -137,8 +139,7 @@ export default {
       this.getItems()
     }
   }
-}
+})
 </script>
 <style scoped>
-
 </style>

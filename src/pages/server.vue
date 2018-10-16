@@ -300,19 +300,19 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { formatTime } from '../assets/scripts/utils'
-
-export default {
-  data () {
+export default Vue.extend({
+  data() {
     return {
       formatTime,
-      itemsTimer: null,
-      roms: [],
-      serverVersions: [],
-      romStores: [],
-      allGroups: [],
-      currentDownOptions: [],
+      itemsTimer: null as any,
+      roms: [] as Array<any>,
+      serverVersions: [] as Array<any>,
+      romStores: [] as Array<any>,
+      allGroups: [] as Array<any>,
+      currentDownOptions: [] as Array<any>,
       rom: '',
       selectedRom: '',
       downDialogMode: '',
@@ -322,9 +322,9 @@ export default {
       downDialogVisible: false,
       itemDialogVisible: false,
       /* table */
-      currentItem: {},
-      currentItems: [],
-      selectedItems: [],
+      currentItem: {} as any,
+      currentItems: [] as Array<any>,
+      selectedItems: [] as Array<any>,
       conditionForm: {
         item: {
           server_group_id: '',
@@ -357,11 +357,11 @@ export default {
     }
   },
   computed: {
-    maxTableHeight () {
+    maxTableHeight() {
       return document.body.clientHeight - 220
     }
   },
-  mounted () {
+  mounted() {
     this.getItems()
     this.getUpdateRoms()
     this.getAllGroups()
@@ -369,14 +369,14 @@ export default {
     this.getServerVersions()
   },
   methods: {
-    toggleRomCollapse (row) {
+    toggleRomCollapse(row: any) {
       row.romCollapse = !row.romCollapse
       this.currentItems = this.currentItems.slice()
     },
-    downDialog (mode) {
+    downDialog(mode: string) {
       if (!this.selectedItems.length) {
         this.$message.info(
-          this.$t('common.selectLeastOne') + this.$t('common.server')
+          '' + this.$t('common.selectLeastOne') + this.$t('common.server')
         )
         return
       }
@@ -385,10 +385,11 @@ export default {
       } else if (mode === 'downRomStore') {
         this.currentDownOptions = this.romStores
       } else {
-        let version = this.selectedItems[0].server_version
+        let selected: any = this.selectedItems[0]
+        let version = selected.server_version
         for (let server of this.selectedItems) {
           if (version != server.server_version) {
-            this.$message.error(this.$t('serverManage.batchSameVersion'))
+            this.$message.error('' + this.$t('serverManage.batchSameVersion'))
             return
           }
         }
@@ -398,16 +399,16 @@ export default {
       }
       this.selectedRom = ''
       this.downDialogMode = mode
-      this.downDialogTitle = this.$t('serverManage.downDialogTitles.' + mode)
-      this.downDialogPlaceholder = this.$t(
+      this.downDialogTitle = '' + this.$t('serverManage.downDialogTitles.' + mode)
+      this.downDialogPlaceholder = '' + this.$t(
         'serverManage.downDialogPlaceholders.' + mode
       )
-      this.downDialogSelectLabel = this.$t(
+      this.downDialogSelectLabel = '' + this.$t(
         'serverManage.downDialogSelectLabels.' + mode
       )
       this.downDialogVisible = true
     },
-    dialogDown () {
+    dialogDown() {
       let url = this.downDialogMode
       if (this.downDialogMode == 'updateServer') {
         url = 'updateRom'
@@ -423,11 +424,11 @@ export default {
         .then(res => {
           if (res.result === 1) {
             this.downDialogVisible = false
-            this.$message.success(this.$t('common.operateSuccess'))
+            this.$message.success('' + this.$t('common.operateSuccess'))
           }
         })
     },
-    updateRom (serverCodes) {
+    updateRom(serverCodes: string) {
       this.$http
         .postForm('api/serverInfo/updateRom', {
           serverCodes: serverCodes,
@@ -435,11 +436,11 @@ export default {
         })
         .then(res => {
           if (res.result === 1) {
-            this.$message.success(this.$t('common.operateSuccess'))
+            this.$message.success('' + this.$t('common.operateSuccess'))
           }
         })
     },
-    editServer (server) {
+    editServer(server: any) {
       this.currentItem = Object.assign({}, server)
       this.currentItem.id = server.id
       this.currentItem.serverCode = server.server_code
@@ -447,66 +448,64 @@ export default {
       this.currentItem.port = server.port
       this.itemDialogVisible = true
     },
-    updateServer () {
+    updateServer() {
       this.$http
         .postJSON('api/serverInfo/update', this.currentItem)
         .then(res => {
           if (res.result === 1) {
             this.getItems()
-            this.$message.success(this.$t('common.operateSuccess'))
+            this.$message.success('' + this.$t('common.operateSuccess'))
             this.itemDialogVisible = false
           } else {
-            this.$message.error(this.$t('common.operateFail'))
+            this.$message.error('' + this.$t('common.operateFail'))
           }
         })
     },
-    getUpdateRoms () {
+    getUpdateRoms() {
       this.$http.get('api/updateRom/getAllList').then(res => {
         if (res.result === 1) {
           this.roms = res.list
         }
       })
     },
-    getServerVersions () {
+    getServerVersions() {
       this.$http.get('api/serverInfo/serverVer').then(res => {
         if (res.result === 1) {
           this.serverVersions = res.list
         }
       })
     },
-    getRomStores () {
+    getRomStores() {
       this.$http.get('api/romStore/listAll').then(res => {
         if (res.result === 1) {
           this.romStores = res.list
         }
       })
     },
-    getAllGroups () {
+    getAllGroups() {
       this.$http.get('api/serverGroup/listAllGroup').then(res => {
         if (res.result === 1) {
           this.allGroups = res.list
         }
       })
     },
-    deleteItem (item) {
-      this.$confirm(this.$t('serverManage.confirmDeleteServer'), this.$t('common.confirm'), {
+    deleteItem(item: any) {
+      this.$confirm('' + this.$t('serverManage.confirmDeleteServer'), '' + this.$t('common.confirm'), {
         type: 'warning'
       }).then(() => {
         this.$http.get('api/serverInfo/delete?id=' + item.id).then(res => {
           if (res.result === 1) {
-            this.$message.success(this.$t('common.deleteSuccess'))
+            this.$message.success('' + this.$t('common.deleteSuccess'))
             this.getItems()
           } else {
-            this.$message.error(this.$t('common.deleteFail'))
+            this.$message.error('' + this.$t('common.deleteFail'))
           }
         })
       }).catch(() => {
       })
     },
     /* table 必备 */
-    getItems () {
-      console.log('1')
-      conssole.log('2')
+    getItems() {
       clearTimeout(this.itemsTimer)
       this.$http
         .postJSON('api/serverInfo/list', this.conditionForm)
@@ -517,7 +516,7 @@ export default {
             }, 60 * 1000)
             this.currentItems = res.list
             this.currentItems.forEach(item => {
-              let roms = item.roms_name.split(',').filter(rom => rom).sort((a, b) => {
+              let roms = item.roms_name.split(',').filter((rom: any) => rom).sort((a: any, b: any) => {
                 // 2.3.1.zip 、 2.3.10.zip 类似字段排序
                 let aArr = a.split('.')
                 let bArr = b.split('.')
@@ -541,7 +540,7 @@ export default {
           }
         })
     },
-    resetCondition () {
+    resetCondition() {
       this.conditionForm = {
         item: {
           server_group_id: '',
@@ -573,7 +572,7 @@ export default {
       }
       this.getItems()
     },
-    sortItems ({ prop, order }) {
+    sortItems({ prop, order }: { prop: string, order: string }) {
       if (prop) {
         this.conditionForm.page.sortname = prop
         if (order === 'descending') {
@@ -587,30 +586,21 @@ export default {
       }
       this.getItems()
     },
-    selectionChange (selections) {
+    selectionChange(selections: Array<any>) {
       this.selectedItems = selections.map(item => {
         return item
       })
     },
-    pageSizeChange (size) {
+    pageSizeChange(size: number) {
       this.conditionForm.page.pageSize = size
       this.getItems()
     },
-    pageNoChange (no) {
+    pageNoChange(no: number) {
       this.conditionForm.page.pageNo = no
       this.getItems()
     },
-    resetForm: function () {
-      this.$refs['itemForm'].resetFields()
-      this.itemForm = {
-        id: -1,
-        version: '',
-        url: '',
-        note: ''
-      }
-    }
   }
-}
+})
 </script>
 <style scoped>
 .small-select {

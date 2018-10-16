@@ -44,8 +44,9 @@
     <span class="version">v:{{version}}</span>
   </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   data() {
     return {
       loginForm: {
@@ -72,7 +73,7 @@ export default {
       version: '0.0.0'
     }
   },
-  mounted: function() {
+  mounted: function () {
     this.getVersion()
     this.setUserName()
   },
@@ -84,11 +85,12 @@ export default {
     },
     setUserName() {
       if (localStorage.getItem('userName') !== null) {
-        this.loginForm.username = localStorage.getItem('userName')
+        this.loginForm.username = '' + localStorage.getItem('userName')
       }
     },
     login() {
-      this.$refs['loginForm'].validate(validateResult => {
+      let form: any = this.$refs['loginForm']
+      form.validate((validateResult: boolean) => {
         if (validateResult) {
           this.$http
             .postForm('auth/api/login', this.loginForm)
@@ -100,25 +102,22 @@ export default {
                 } else {
                   localStorage.removeItem('userName')
                 }
-                this.$message({
-                  message: this.$t('common.loginSuccess'),
-                  type: 'success'
-                })
+                this.$message.success('' + this.$t('common.loginSuccess'))
                 this.$router.push('/server')
               } else {
-                this.$message.error(this.$t('common.loginFail'))
+                this.$message.error('' + this.$t('common.loginFail'))
               }
             })
             .catch(() => {
               console.error('登录接口出错')
             })
         } else {
-          this.$message.error(this.$t('common.loginFormError'))
+          this.$message.error('' + this.$t('common.loginFormError'))
         }
       })
     }
   }
-}
+})
 </script>
 <style scoped>
 .login-box {

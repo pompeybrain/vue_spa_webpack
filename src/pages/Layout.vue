@@ -43,12 +43,12 @@
     </div>
   </div>
 </template>
-<script>
-import vAside from "./Aside";
-
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import vAside from "./Aside.vue";
+export default Vue.extend({
   components: { vAside },
-  data () {
+  data() {
     return {
       passwordFormVisible: false,
       passwordForm: {
@@ -66,14 +66,14 @@ export default {
         confirmPassword: [
           {
             required: true,
-            validator: this.validateConfirmPassword
+            validator: (rule: object, value: string, callback: () => any) => { }
           }
         ]
       }
     };
   },
   computed: {
-    userName () {
+    userName() {
       let userName = sessionStorage.getItem("userName");
       if (userName !== null) {
         return userName;
@@ -82,47 +82,52 @@ export default {
       }
     }
   },
+  created() {
+    this.passwordFormRules.confirmPassword[0].validator = this.validateConfirmPassword
+  },
   methods: {
-    validateConfirmPassword (rule, value, callback) {
+    validateConfirmPassword(rule: object, value: string, callback: (error?: object) => any) {
       if (value == this.passwordForm.newPwd) {
         callback();
       } else {
-        callback(new Error(this.$t("header.repeatPasswordError")));
+        callback(new Error('' + this.$t("header.repeatPasswordError")));
       }
     },
-    editPassword () {
-      this.$refs["passwordForm"] && this.$refs["passwordForm"].resetFields();
+    editPassword() {
+      let form: any = this.$refs["passwordForm"]
+      form && form.resetFields();
       this.passwordFormVisible = true;
     },
-    updatePassword () {
-      this.$refs["passwordForm"].validate(valid => {
+    updatePassword() {
+      let form: any = this.$refs["passwordForm"]
+      form.validate((valid: boolean) => {
         if (valid) {
-          this.$http.postForm("auth/updatePwd", this.passwordForm).then(res => {
+          this.$http.postForm("auth/updatePwd", this.passwordForm).then((res: Res) => {
             if (res.result === 1) {
-              this.$message.success(this.$t("common.operateSuccess"));
+              this.$message.success('' + this.$t("common.operateSuccess"));
               this.$router.push("/");
             } else {
               if (res.msg == -100) {
-                this.$message.error(this.$t("header.oldPasswordError"));
+                this.$message.error('' + this.$t("header.oldPasswordError"));
               } else {
-                this.$message.error(this.$t("common.operateFail"));
+                this.$message.error('' + this.$t("common.operateFail"));
               }
             }
           });
         } else {
-          this.$message.error(this.$t("common.formError"));
+          this.$message.error('' + this.$t("common.formError"));
         }
       });
     },
-    logout () {
-      this.$http.get("auth/api/logout").then(res => {
+    logout() {
+      this.$http.get("auth/api/logout").then((res: Res) => {
         sessionStorage.removeItem("userName");
-        this.$message.success(this.$t("header.logoutSuccess"));
+        this.$message.success('' + this.$t("header.logoutSuccess"));
         this.$router.push("/");
       });
     }
   }
-};
+})
 </script>
 <style scoped>
 .header {

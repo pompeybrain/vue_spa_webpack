@@ -41,8 +41,9 @@
     </el-menu>
   </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   data() {
     return {
       accessUrl: '',
@@ -50,12 +51,12 @@ export default {
     }
   },
   computed: {
-    onRoute: function() {
+    onRoute(): string {
       return this.$route.path.split('/')[1]
     }
   },
   methods: {
-    changeRoute(index) {
+    changeRoute(index: string) {
       if (index !== this.onRoute) {
         this.$router.push('/' + index)
       } else {
@@ -63,7 +64,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 <style scoped>
 .el-menu {
