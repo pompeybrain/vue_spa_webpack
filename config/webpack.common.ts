@@ -14,7 +14,7 @@ const config: webpack.Configuration = {
     app: './src/main.ts'
   },
   output: {
-    filename: '[name]_[hash].js',
+    filename: 'static/js/[name]_[hash].js',
     path: path.resolve(__dirname, '../dist')
   },
   resolve: {
@@ -37,7 +37,10 @@ const config: webpack.Configuration = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: ['file-loader']
+        loader: 'file-loader',
+        options: {
+          name: 'static/fonts/[hash].[ext]'
+        }
       },
       {
         test: /\.styl$/,
@@ -45,7 +48,10 @@ const config: webpack.Configuration = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader']
+        loader: 'file-loader',
+        options: {
+          name: 'static/images/[hash].[ext]'
+        }
       }
     ]
   },

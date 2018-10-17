@@ -11,7 +11,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 import merge from 'webpack-merge';
 import commonConfig from './webpack.common';
 
-module.exports = merge(commonConfig, {
+const prodConfig = merge(commonConfig, {
   mode: 'production',
   optimization: {
     runtimeChunk: 'single',
@@ -19,10 +19,9 @@ module.exports = merge(commonConfig, {
       new UglifyJsPlugin({
         cache: true,
         parallel: true,
-        sourceMap: true // set to true if you want JS source maps
+        sourceMap: false // set to true if you want JS source maps
       }),
-      new OptimizeCSSAssetsPlugin({}),
-      new BundleAnalyzerPlugin()
+      new OptimizeCSSAssetsPlugin({})
     ]
   },
   module: {
@@ -42,8 +41,7 @@ module.exports = merge(commonConfig, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css'
+      filename: 'static/css/[name]_[hash].css'
     })
   ],
   stats: {
@@ -52,3 +50,8 @@ module.exports = merge(commonConfig, {
     modules: false
   }
 });
+// use npm run build --analyzer option to use this plugin
+if (process.env.npm_config_argv.indexOf('analyzer') !== -1) {
+  prodConfig.plugins.push(new BundleAnalyzerPlugin());
+}
+module.exports = prodConfig;
