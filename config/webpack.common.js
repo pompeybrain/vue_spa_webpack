@@ -1,15 +1,9 @@
-import path from 'path';
-import webpack from 'webpack';
-// tslint:disable-next-line:no-var-requires
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-// tslint:disable-next-line:no-var-requires
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-// tslint:disable-next-line:no-var-requires
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-const config: webpack.Configuration = {
+module.exports = {
   entry: {
     app: './src/main.ts'
   },
@@ -21,8 +15,7 @@ const config: webpack.Configuration = {
     extensions: ['.ts', '.vue', '.js']
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.tsx?$/,
         loader: 'ts-loader',
         exclude: /node_modules/,
@@ -67,4 +60,3 @@ const config: webpack.Configuration = {
     })
   ]
 };
-export default config;

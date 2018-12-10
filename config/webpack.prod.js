@@ -1,15 +1,11 @@
-// tslint:disable-next-line:no-var-requires
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// tslint:disable-next-line:no-var-requires
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-// tslint:disable-next-line:no-var-requires
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-// tslint:disable-next-line:no-var-requires
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 
-import merge from 'webpack-merge';
-import commonConfig from './webpack.common';
+const merge = require('webpack-merge');
+const commonConfig = require('./webpack.common');
 
 const prodConfig = merge(commonConfig, {
   mode: 'production',
@@ -25,19 +21,19 @@ const prodConfig = merge(commonConfig, {
     ]
   },
   module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: { importLoaders: 1 }
-          },
-          'postcss-loader'
-        ]
-      }
-    ]
+    rules: [{
+      test: /\.css$/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1
+          }
+        },
+        'postcss-loader'
+      ]
+    }]
   },
   plugins: [
     new MiniCssExtractPlugin({
