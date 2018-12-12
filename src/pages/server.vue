@@ -627,6 +627,7 @@ export default Vue.extend({
   cursor: pointer;
   color: rgb(64, 158, 255);
 }
+
 .label-nums {
   margin-left: 20px;
 }

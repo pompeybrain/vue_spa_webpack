@@ -20,7 +20,9 @@ declare module 'vue/types/vue' {
     $http: FetchUtil;
   }
 }
+
 import vueI18n from 'vue-i18n';
+
 import vueRouter from 'vue-router';
 let innerI18n: vueI18n;
 let innerRouter: vueRouter;

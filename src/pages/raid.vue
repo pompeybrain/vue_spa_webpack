@@ -231,8 +231,6 @@
         this.getItems()
       },
       filterTag (value, row) {
-        // console.log(value)
-        // console.log(row)
         return row.raid_state == value
       }
     }
