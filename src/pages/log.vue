@@ -2,37 +2,79 @@
   <div>
     <el-breadcrumb separator="/">
       <el-breadcrumb-item>
-        <svg class="icon" aria-hidden="true">
+        <svg
+          class="icon"
+          aria-hidden="true"
+        >
           <use xlink:href="#icon-log"></use>
         </svg>
         {{$t('logManage.name')}}
       </el-breadcrumb-item>
     </el-breadcrumb>
     <div class="content">
-      <el-form inline size="small">
+      <el-form
+        inline
+        size="small"
+      >
         <el-form-item :label="$t('logManage.date')">
-          <el-date-picker v-model="conditionForm.item.timeRange" type="daterange" range-separator="-" :start-placeholder="$t('logManage.startDate')" :end-placeholder="$t('logManage.endDate')">
+          <el-date-picker
+            v-model="conditionForm.item.timeRange"
+            type="daterange"
+            range-separator="-"
+            :start-placeholder="$t('logManage.startDate')"
+            :end-placeholder="$t('logManage.endDate')"
+          >
           </el-date-picker>
         </el-form-item>
         <el-form-item>
           <el-input v-model="conditionForm.item.note"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="getItems" type="primary">{{$t('common.search')}}</el-button>
+          <el-button
+            @click="getItems"
+            type="primary"
+          >{{$t('common.search')}}</el-button>
           <el-button @click="resetCondition">{{$t('common.all')}}</el-button>
         </el-form-item>
       </el-form>
-      <el-table :data="currentItems" @selection-change="selectionChange" border style="width: 100%" size="mini" @sort-change="sortItems" :max-height="maxTableHeight">
+      <el-table
+        :data="currentItems"
+        @selection-change="selectionChange"
+        border
+        style="width: 100%"
+        size="mini"
+        @sort-change="sortItems"
+        :max-height="maxTableHeight"
+      >
 
-        <el-table-column prop="update_time" :label="$t('common.updateTime')" width="140" sortable align="center">
+        <el-table-column
+          prop="update_time"
+          :label="$t('common.updateTime')"
+          width="140"
+          sortable
+          align="center"
+        >
           <template slot-scope="props">
             {{formatTime({timestamp:props.row.time})}}
           </template>
         </el-table-column>
-        <el-table-column prop="note" :label="$t('logManage.content')" align="center">
+        <el-table-column
+          prop="note"
+          :label="$t('logManage.content')"
+          align="center"
+        >
         </el-table-column>
       </el-table>
-      <el-pagination class="pagination" @size-change="pageSizeChange" :page-sizes="[30, 50, 100, 200]" :page-size="conditionForm.page.pageSize" :current-page="conditionForm.page.pageNo" @current-change="pageNoChange" layout="total, sizes,prev, pager, next, jumper" :total="conditionForm.page.totalRows">
+      <el-pagination
+        class="pagination"
+        @size-change="pageSizeChange"
+        :page-sizes="[30, 50, 100, 200]"
+        :page-size="conditionForm.page.pageSize"
+        :current-page="conditionForm.page.pageNo"
+        @current-change="pageNoChange"
+        layout="total, sizes,prev, pager, next, jumper"
+        :total="conditionForm.page.totalRows"
+      >
       </el-pagination>
     </div>
   </div>

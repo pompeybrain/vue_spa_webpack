@@ -18,7 +18,17 @@ const prodConfig = merge(commonConfig, {
         sourceMap: false // set to true if you want JS source maps
       }),
       new OptimizeCSSAssetsPlugin({})
-    ]
+    ],
+    // splitChunks: {
+    //   cacheGroups: {
+    //     styles: {
+    //       name: 'styles',
+    //       test: /\.css$/,
+    //       chunks: 'all',
+    //       enforce: true
+    //     }
+    //   }
+    // }
   },
   module: {
     rules: [{
@@ -37,7 +47,7 @@ const prodConfig = merge(commonConfig, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'static/css/[name]_[hash].css'
+      filename: 'static/css/[name].css'
     })
   ],
   stats: {

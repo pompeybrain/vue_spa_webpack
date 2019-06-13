@@ -12,7 +12,10 @@ module.exports = {
     path: path.resolve(__dirname, '../dist')
   },
   resolve: {
-    extensions: ['.ts', '.vue', '.js']
+    extensions: ['.ts', '.vue', '.js'],
+    alias: {
+      '@': path.resolve('../src')
+    }
   },
   module: {
     rules: [{

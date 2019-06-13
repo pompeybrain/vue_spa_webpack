@@ -185,35 +185,35 @@
             this.$http.postForm(url, this.itemForm).then(res => {
               this.saving = false
               if (res.result === 1) {
-                this.$message.success(this.$t('common.operateSuccess'))
+                this.$message.success(this.$ts('common.operateSuccess'))
                 this.itemFormVisible = false
                 this.getItems()
               } else {
-                this.$message.error(this.$t('common.operateFail'))
+                this.$message.error(this.$ts('common.operateFail'))
               }
             })
           } else {
-            this.$message.error(this.$t('common.formError'))
+            this.$message.error(this.$ts('common.formError'))
           }
         })
       },
       confirmDelete(ids = 0) {
-        let confirmText = this.$t('common.confirmDeleteOne')
+        let confirmText = this.$ts('common.confirmDeleteOne')
         if (!ids) {
           // 勾选操作
-          confirmText = this.$t('common.confirmDeleteSelected')
+          confirmText = this.$ts('common.confirmDeleteSelected')
           ids = this.selectedItems.map(ele => {
             return ele.id
           })
           if (!ids.length) {
             // 没有勾选
-            this.$message.info(this.$t('common.selectLeastOne'))
+            this.$message.info(this.$ts('common.selectLeastOne'))
             return false
           } else {
             ids = ids.join(',')
           }
         }
-        this.$confirm(confirmText, this.$t('common.confirm'), {
+        this.$confirm(confirmText, this.$ts('common.confirm'), {
           type: 'warning'
         })
           .then(() => {
@@ -225,7 +225,7 @@
       deleteItem(ids) {
         this.$http.get('api/serverGroup/delete?ids=' + ids).then(res => {
           if (res.result === 1) {
-            this.$message.success(this.$t('common.operateSuccess'))
+            this.$message.success(this.$ts('common.operateSuccess'))
             this.getItems()
           }
         })

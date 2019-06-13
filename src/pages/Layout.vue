@@ -58,10 +58,10 @@ export default Vue.extend({
       },
       passwordFormRules: {
         oldPwd: [
-          { required: true, message: this.$t("header.inputOldPassword") }
+          { required: true, message: this.$ts("header.inputOldPassword") }
         ],
         newPwd: [
-          { required: true, message: this.$t("header.inputNewPassword") }
+          { required: true, message: this.$ts("header.inputNewPassword") }
         ],
         confirmPassword: [
           {
@@ -90,7 +90,7 @@ export default Vue.extend({
       if (value == this.passwordForm.newPwd) {
         callback();
       } else {
-        callback(new Error('' + this.$t("header.repeatPasswordError")));
+        callback(new Error('' + this.$ts("header.repeatPasswordError")));
       }
     },
     editPassword() {
@@ -104,25 +104,25 @@ export default Vue.extend({
         if (valid) {
           this.$http.postForm("auth/updatePwd", this.passwordForm).then((res: Res) => {
             if (res.result === 1) {
-              this.$message.success('' + this.$t("common.operateSuccess"));
+              this.$message.success('' + this.$ts("common.operateSuccess"));
               this.$router.push("/");
             } else {
               if (res.msg == -100) {
-                this.$message.error('' + this.$t("header.oldPasswordError"));
+                this.$message.error('' + this.$ts("header.oldPasswordError"));
               } else {
-                this.$message.error('' + this.$t("common.operateFail"));
+                this.$message.error('' + this.$ts("common.operateFail"));
               }
             }
           });
         } else {
-          this.$message.error('' + this.$t("common.formError"));
+          this.$message.error('' + this.$ts("common.formError"));
         }
       });
     },
     logout() {
       this.$http.get("auth/api/logout").then((res: Res) => {
         sessionStorage.removeItem("userName");
-        this.$message.success('' + this.$t("header.logoutSuccess"));
+        this.$message.success('' + this.$ts("header.logoutSuccess"));
         this.$router.push("/");
       });
     }

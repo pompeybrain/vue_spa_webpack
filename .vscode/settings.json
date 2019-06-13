@@ -1,0 +1,11 @@
+{
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}/src"
+  },
+  "editor.tabSize": 2,
+  "editor.fontFamily": "Consolas, Source Code Pro, Menlo, Monaco, 'Courier New', monospace",
+  "editor.wordWrapColumn": 120,
+  "vetur.format.defaultFormatter.js": "prettier-eslint",
+  "vetur.format.defaultFormatter.ts": "vscode-typescript",
+  "editor.wordWrap": "bounded"
+}

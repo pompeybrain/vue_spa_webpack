@@ -5,7 +5,11 @@
       <el-row :gutter="0">
         <el-col :span="16" :offset="4">
           <el-form-item prop="username">
-            <el-input v-model="loginForm.username" class="username" :placeholder="$t('common.account')">
+            <el-input
+              v-model="loginForm.username"
+              class="username"
+              :placeholder="$t('common.account')"
+            >
               <template slot="prepend">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-user"></use>
@@ -18,7 +22,12 @@
       <el-row :gutter="0">
         <el-col :span="16" :offset="4">
           <el-form-item prop="password">
-            <el-input v-model="loginForm.password" class="password" :placeholder="$t('common.password')" type="password">
+            <el-input
+              v-model="loginForm.password"
+              class="password"
+              :placeholder="$t('common.password')"
+              type="password"
+            >
               <template slot="prepend">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-lock"></use>
@@ -57,14 +66,14 @@ export default Vue.extend({
         username: [
           {
             required: true,
-            message: this.$t('common.pleaseInputAccount'),
+            // message: this.$ts('common.pleaseInputAccount'),
             trigger: 'blur'
           }
         ],
         password: [
           {
             required: true,
-            message: this.$t('common.pleaseInputPassword'),
+            // message: this.$ts('common.pleaseInputPassword'),
             trigger: 'blur'
           }
         ]
@@ -102,17 +111,18 @@ export default Vue.extend({
                 } else {
                   localStorage.removeItem('userName')
                 }
-                this.$message.success('' + this.$t('common.loginSuccess'))
+                console.log(this);
+                this.$message.success(this.$ts('common.loginSuccess'))
                 this.$router.push('/server')
               } else {
-                this.$message.error('' + this.$t('common.loginFail'))
+                this.$message.error(this.$ts('common.loginFail'))
               }
             })
             .catch(() => {
               console.error('登录接口出错')
             })
         } else {
-          this.$message.error('' + this.$t('common.loginFormError'))
+          this.$message.error(this.$ts('common.loginFormError'))
         }
       })
     }

@@ -376,7 +376,7 @@ export default Vue.extend({
     downDialog(mode: string) {
       if (!this.selectedItems.length) {
         this.$message.info(
-          '' + this.$t('common.selectLeastOne') + this.$t('common.server')
+          '' + this.$ts('common.selectLeastOne') + this.$ts('common.server')
         )
         return
       }
@@ -389,7 +389,7 @@ export default Vue.extend({
         let version = selected.server_version
         for (let server of this.selectedItems) {
           if (version != server.server_version) {
-            this.$message.error('' + this.$t('serverManage.batchSameVersion'))
+            this.$message.error('' + this.$ts('serverManage.batchSameVersion'))
             return
           }
         }
@@ -399,11 +399,11 @@ export default Vue.extend({
       }
       this.selectedRom = ''
       this.downDialogMode = mode
-      this.downDialogTitle = '' + this.$t('serverManage.downDialogTitles.' + mode)
-      this.downDialogPlaceholder = '' + this.$t(
+      this.downDialogTitle = '' + this.$ts('serverManage.downDialogTitles.' + mode)
+      this.downDialogPlaceholder = '' + this.$ts(
         'serverManage.downDialogPlaceholders.' + mode
       )
-      this.downDialogSelectLabel = '' + this.$t(
+      this.downDialogSelectLabel = '' + this.$ts(
         'serverManage.downDialogSelectLabels.' + mode
       )
       this.downDialogVisible = true
@@ -424,7 +424,7 @@ export default Vue.extend({
         .then(res => {
           if (res.result === 1) {
             this.downDialogVisible = false
-            this.$message.success('' + this.$t('common.operateSuccess'))
+            this.$message.success('' + this.$ts('common.operateSuccess'))
           }
         })
     },
@@ -436,7 +436,7 @@ export default Vue.extend({
         })
         .then(res => {
           if (res.result === 1) {
-            this.$message.success('' + this.$t('common.operateSuccess'))
+            this.$message.success('' + this.$ts('common.operateSuccess'))
           }
         })
     },
@@ -454,10 +454,10 @@ export default Vue.extend({
         .then(res => {
           if (res.result === 1) {
             this.getItems()
-            this.$message.success('' + this.$t('common.operateSuccess'))
+            this.$message.success('' + this.$ts('common.operateSuccess'))
             this.itemDialogVisible = false
           } else {
-            this.$message.error('' + this.$t('common.operateFail'))
+            this.$message.error('' + this.$ts('common.operateFail'))
           }
         })
     },
@@ -490,15 +490,15 @@ export default Vue.extend({
       })
     },
     deleteItem(item: any) {
-      this.$confirm('' + this.$t('serverManage.confirmDeleteServer'), '' + this.$t('common.confirm'), {
+      this.$confirm('' + this.$ts('serverManage.confirmDeleteServer'), '' + this.$ts('common.confirm'), {
         type: 'warning'
       }).then(() => {
         this.$http.get('api/serverInfo/delete?id=' + item.id).then(res => {
           if (res.result === 1) {
-            this.$message.success('' + this.$t('common.deleteSuccess'))
+            this.$message.success('' + this.$ts('common.deleteSuccess'))
             this.getItems()
           } else {
-            this.$message.error('' + this.$t('common.deleteFail'))
+            this.$message.error('' + this.$ts('common.deleteFail'))
           }
         })
       }).catch(() => {

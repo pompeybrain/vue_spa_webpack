@@ -1,16 +1,16 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Layout from './pages/Layout.vue';
-import Login from './pages/Login.vue';
+import Vue from 'vue'
+import Router from 'vue-router'
+import Layout from './pages/Layout.vue'
+import Login from './pages/Login.vue'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path: '/',
       name: 'login',
-      component: Login
+      component: Login,
     },
     {
       path: '/',
@@ -19,19 +19,29 @@ export default new Router({
         {
           path: '/server',
           component: () =>
-            import(/* webpackChunkName: "server" */ './pages/server.vue')
+            import(/* webpackChunkName: "server" */ './pages/server.vue'),
         },
+        {
+          path: '/firmware',
+          component: () =>
+            import(/* webpackChunkName: "log" */ './pages/firmware.vue'),
+        },
+        // {
+        //   path: "/raid",
+        //   component: () =>
+        //     import(/* webpackChunkName: "log" */ "./pages/raid.vue")
+        // },
         {
           path: '/log',
           component: () =>
-            import(/* webpackChunkName: "log" */ './pages/log.vue')
-        }
-      ]
+            import(/* webpackChunkName: "log" */ './pages/log.vue'),
+        },
+      ],
     },
     {
       path: '*',
       component: () =>
-        import(/* webpackChunkName: "notfound" */ './pages/NotFound.vue')
-    }
-  ]
-});
+        import(/* webpackChunkName: "notfound" */ './pages/NotFound.vue'),
+    },
+  ],
+})

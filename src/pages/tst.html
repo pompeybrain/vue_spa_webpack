@@ -1,0 +1,34 @@
+<div class="content-container content-list">
+  <div class="content-header">
+    <div class="left-panel">
+      <span>{{ title }}</span>
+    </div>
+    <div class="right-panel">
+      <div class="panel-item">
+        <i-button type="primary" custom-icon="fa fa-plus-circle" @click="onCreateClicked" data-uat-key="journey_create">
+          {{ $t('journey.api.create') }}
+        </i-button>
+      </div>
+      <div class="panel-item help-link">
+        <i-button type="primary" icon="md-help-circle" @click="gotoHelp()">
+          {{ $t('common.help') }}
+        </i-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <nz-list-table-component :columns="tableModel.columns" :records="tableModel.records" @on-record-click="onCjClicked"></nz-list-table-component>
+  </div>
+
+  <div class="content-footer">
+    <nz-pagination :total="pageModel.total" :current="pageModel.current" @goto-page="loadCjsPage"></nz-pagination>
+  </div>
+
+  <folder-assign-component ref="folderAssign" :domain="folderAssignModel.domain" :object="folderAssignModel.cj"
+    @on-finish="loadCjsPage(pageModel.current)"></folder-assign-component>
+
+  <journey-template-create-component ref="createTemplate"></journey-template-create-component>
+
+  <journey-template-list-component ref="templateList" @on-select="onTemplateSelect"></journey-template-list-component>
+</div>
